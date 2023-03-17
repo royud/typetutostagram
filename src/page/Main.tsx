@@ -1,11 +1,25 @@
+import { useEffect, useState } from "react";
+
+import { instance } from "../api/api";
+
 import ContentList from "../component/common/ContentList";
 import Header from "../component/common/Header";
 import Layout from "../component/common/Layout";
 
-const Content: React.FC = () => {
+const Content = () => {
+  const [contentList, setContentList] = useState([]);
+  const getContentList = async () => {
+    const { data } = await instance.get(`/contentList`);
+    setContentList(data);
+  };
+
+  useEffect(() => {
+    getContentList();
+  }, []);
+
   return (
     <Layout>
-      <ContentList></ContentList>
+      <ContentList list={contentList} />
     </Layout>
   );
 };

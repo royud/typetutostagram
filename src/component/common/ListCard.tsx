@@ -1,28 +1,40 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
+import { ContentInterface } from "../../util/interface";
 
-const ListCard: React.FC = () => {
+const ListCard = ({ cardInfo }: { cardInfo: ContentInterface }) => {
+  const navigate = useNavigate();
+  // ---------------------------------------------------------------------------
   const [isMouseOver, setIsMouseOver] = useState(false);
+  // ---------------------------------------------------------------------------
   const CardMouseOver = () => {
     setIsMouseOver(true);
   };
   const CardMouseOut = () => {
     setIsMouseOver(false);
   };
+  const goToListPage = (id: number) => {
+    navigate(`/list?n=${id}`, {
+      state: {
+        n: id,
+      },
+    });
+  };
+  // ---------------------------------------------------------------------------
   return (
     <Wrap
       onMouseOver={CardMouseOver}
       onMouseOut={CardMouseOut}
+      onClick={() => {
+        goToListPage(cardInfo.id);
+      }}
       isMouseOver={isMouseOver}
     >
-      <Img></Img>
-      <Title>
-        아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아아
-      </Title>
-      <Writer>
-        ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
-      </Writer>
+      <Img imgUrl={cardInfo.imgUrl}></Img>
+      <Title>{cardInfo.title}</Title>
+      <Writer>{cardInfo.writer}</Writer>
     </Wrap>
   );
 };
@@ -35,10 +47,9 @@ const Wrap = styled.li<{ isMouseOver: boolean }>`
   border-radius: 15px;
   ${({ isMouseOver }) => (isMouseOver ? `box-shadow: 0 0 5px 0 gray;` : ``)}
 `;
-const Img = styled.div`
+const Img = styled.div<{ imgUrl: string }>`
   height: 150px;
-  background: url(https://cdn.pixabay.com/photo/2017/01/14/12/59/iceland-1979445_960_720.jpg)
-    no-repeat;
+  background: ${({ imgUrl }) => `url(${imgUrl})`} no-repeat;
   background-size: cover;
   background-position: center;
   border-radius: 15px;

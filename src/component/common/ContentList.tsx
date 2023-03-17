@@ -1,11 +1,14 @@
 import styled from "styled-components";
+import { ContentListInterface } from "../../util/interface";
 import ListCard from "./ListCard";
 
-const ContentList: React.FC = () => {
+const ContentList = ({ list }: { list: ContentListInterface }) => {
   return (
     <Wrap>
-      <ListCard></ListCard>
-      <ListCard></ListCard>
+      {list &&
+        list.map((info) => {
+          return <ListCard key={info.id} cardInfo={info} />;
+        })}
     </Wrap>
   );
 };

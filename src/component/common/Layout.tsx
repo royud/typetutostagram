@@ -7,6 +7,7 @@ const Layout = ({ children }: PropsWithChildren) => {
 
 const Wrap = styled.div`
   max-width: 1100px;
+  height: 100%;
   margin: auto;
 `;
 
