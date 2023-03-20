@@ -22,6 +22,39 @@ const ListCard = ({ cardInfo }: { cardInfo: ContentInterface }) => {
       },
     });
   };
+  const createdText = (nowDate: number) => {
+    const sec = 1000;
+    const min = sec * 60;
+    const hour = min * 60;
+    const day = hour * 24;
+
+    const Today = new Date(nowDate);
+    const createdYear = Today.getFullYear();
+    const createdMonth = Today.getMonth() + 1;
+    const createdDate = Today.getDate();
+    const createdHour = Today.getHours();
+
+    const currentDay = Date.now() - nowDate;
+
+    const recent = `최근 업로드`;
+    const updateHour = `${parseInt(String(currentDay / hour))}시간 전`;
+    const updateMin = `${parseInt(String(currentDay / min))}분 전`;
+    const updateFull = `${createdYear}.${
+      createdMonth < 10 ? "0" + createdMonth : createdMonth
+    }.${createdDate} ${createdHour > 12 ? createdHour - 12 : createdHour}${
+      createdHour > 12 ? "PM" : "AM"
+    }`;
+
+    if (currentDay / day >= 1) {
+      return updateFull;
+    } else if (currentDay / hour >= 1) {
+      return updateHour;
+    } else if (currentDay / min >= 1) {
+      return updateMin;
+    } else {
+      return recent;
+    }
+  };
   // ---------------------------------------------------------------------------
   return (
     <Wrap
@@ -35,6 +68,7 @@ const ListCard = ({ cardInfo }: { cardInfo: ContentInterface }) => {
       <Img imgUrl={cardInfo.imgUrl}></Img>
       <Title>{cardInfo.title}</Title>
       <Writer>{cardInfo.writer}</Writer>
+      <CreatedDate>{createdText(cardInfo.createdAt)}</CreatedDate>
     </Wrap>
   );
 };
@@ -67,9 +101,14 @@ const Title = styled.div`
   margin-bottom: 5px;
 `;
 const Writer = styled.div`
-  font-size: 15px;
+  font-size: 13px;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #b3b3b3;
+`;
+const CreatedDate = styled.div`
+  font-size: 12px;
+  overflow: hidden;
   color: #b3b3b3;
 `;
 

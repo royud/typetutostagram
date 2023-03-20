@@ -6,21 +6,22 @@ import Layout from "./Layout";
 const Header: React.FC = () => {
   const navigate = useNavigate();
 
-  const goToAddContent = () => {
-    navigate("/write");
-  };
-  const goToMain = () => {
-    navigate("/");
-  };
-
   return (
     <Wrap>
       <Layout>
         <ContentWrap>
-          <Title onClick={goToMain}>TypeTutoStagram</Title>
+          <Title
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            TypeTutoStagram
+          </Title>
           <ButtonBox>
             <ButtonLayout
-              onClick={goToAddContent}
+              onClick={() => {
+                navigate("/write");
+              }}
               name={"Add"}
               width={"100px"}
               height={"30px"}

@@ -9,7 +9,9 @@ import Layout from "../component/common/Layout";
 const Content = () => {
   const [contentList, setContentList] = useState([]);
   const getContentList = async () => {
-    const { data } = await instance.get(`/contentList`);
+    const { data } = await instance.get(
+      `/contentList?_sort=createdAt&_order=desc`
+    );
     setContentList(data);
   };
 
